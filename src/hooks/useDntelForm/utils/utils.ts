@@ -1,6 +1,6 @@
 // utils.ts - Utility functions for working with DntelForm
 
-import { FormData } from "./types";
+import { FormData } from "../index";
 
 /**
  * Validates if all required fields are filled
@@ -211,4 +211,48 @@ export function applyChangesToData(
     });
 
     return newData;
+}
+
+export function getAllFieldKeys(data: FormData): string[] {
+    const keys: string[] = [];
+
+    Object.entries(data.sections).forEach(([sectionKey, section]) => {
+        if (section.module === "codes") {
+            Object.entries(section.fields).forEach(
+                ([codeKey, codeData]: [string, any]) => {
+                    if (codeData.frequency) {
+                        keys.push(codeData.frequency.key);
+                    }
+                    if (codeData.coveragePercentage) {
+                        keys.push(codeData.coveragePercentage.key);
+                    }
+                    if (codeData.guidelines) {
+                        Object.entries(codeData.guidelines).forEach(
+                            ([guidelineKey, guidelineData]: [string, any]) => {
+                                keys.push(guidelineData.key);
+                            }
+                        );
+                    }
+                }
+            );
+        } else if (section.module === "ServiceHistory") {
+            Object.entries(section.fields).forEach(
+                ([categoryKey, categoryData]: [string, any]) => {
+                    categoryData.Services.forEach((service: any) => {
+                        keys.push(service.CDTCode.key);
+                        keys.push(service.FriendlyName.key);
+                        keys.push(service.LastServiceDate.key);
+                    });
+                }
+            );
+        } else {
+            Object.entries(section.fields).forEach(
+                ([fieldKey, field]: [string, any]) => {
+                    keys.push(`${sectionKey}.${fieldKey}`);
+                }
+            );
+        }
+    });
+
+    return keys;
 }

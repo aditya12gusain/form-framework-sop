@@ -1,11 +1,8 @@
-import "./App.css";
-import DntelFormDemo2 from "./components/DntelFormDemo2";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes";
+
 function App() {
-    return (
-        <>
-            <DntelFormDemo2 />
-        </>
-    );
+    return <RouterProvider router={router} />;
 }
 
 export default App;

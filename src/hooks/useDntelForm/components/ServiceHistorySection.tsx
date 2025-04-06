@@ -1,15 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SectionProps, FieldProps } from "@/hooks/types";
-
-interface ServiceHistorySectionProps {
-    section: SectionProps;
-    renderField: (
-        key: string,
-        field: FieldProps,
-        bgColor?: string
-    ) => React.ReactElement;
-}
+import { ServiceHistorySectionProps } from "../index";
 
 export const ServiceHistorySection = React.memo(
     ({ section, renderField }: ServiceHistorySectionProps) => {

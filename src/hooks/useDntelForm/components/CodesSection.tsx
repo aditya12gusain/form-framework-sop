@@ -1,15 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SectionProps, FieldProps } from "@/hooks/types";
-
-interface CodesSectionProps {
-    section: SectionProps;
-    renderField: (
-        key: string,
-        field: FieldProps,
-        bgColor?: string
-    ) => React.ReactElement;
-}
+import { CodesSectionProps } from "../index";
 
 export const CodesSection = React.memo(
     ({ section, renderField }: CodesSectionProps) => {

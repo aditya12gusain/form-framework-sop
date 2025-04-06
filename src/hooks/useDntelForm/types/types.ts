@@ -75,3 +75,50 @@ export type UseDntelFormReturn = [
         setEditMode: (enabled: boolean) => void;
     }
 ];
+
+export interface DntelFormProps {
+    sortedSections: Array<{ key: string } & SectionProps>;
+    expandedSections: string[];
+    activeSection: string;
+    editMode: boolean;
+    sectionRefs: React.RefObject<Record<string, HTMLElement | null>>;
+    onSectionToggle: (sectionId: string, isOpen: boolean) => void;
+    onExpandAll: () => void;
+    onCollapseAll: () => void;
+    onEditModeToggle: () => void;
+    onReset: () => void;
+    onClearLS: () => void;
+    renderField: (
+        key: string,
+        field: FieldProps,
+        bgColor?: string
+    ) => React.ReactElement;
+    id?: string;
+}
+
+export interface CodesSectionProps {
+    section: SectionProps;
+    renderField: (
+        key: string,
+        field: FieldProps,
+        bgColor?: string
+    ) => React.ReactElement;
+}
+
+export interface ServiceHistorySectionProps {
+    section: SectionProps;
+    renderField: (
+        key: string,
+        field: FieldProps,
+        bgColor?: string
+    ) => React.ReactElement;
+}
+
+export interface FormFieldProps {
+    fieldKey: string;
+    field: FieldProps;
+    sectionBgColor?: string;
+    currentValue: any;
+    onChange: (value: any) => void;
+    editMode: boolean;
+}

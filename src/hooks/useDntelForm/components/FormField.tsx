@@ -18,16 +18,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon, X, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format, parse, isValid } from "date-fns";
-import { FieldProps } from "@/hooks/types";
-
-interface FormFieldProps {
-    fieldKey: string;
-    field: FieldProps;
-    sectionBgColor?: string;
-    currentValue: any;
-    onChange: (value: any) => void;
-    editMode: boolean;
-}
+import { FormFieldProps } from "../index";
 
 const TextInput = React.memo(
     ({ value, onChange, placeholder, disabled, id }: any) => (
@@ -248,8 +239,8 @@ export const FormField = React.memo(
                     </label>
                     {field.tooltip && (
                         <Popover>
-                            <PopoverTrigger>
-                                <Info className="h-4 w-4 text-gray-400" />
+                            <PopoverTrigger className="cursor-pointer group">
+                                <Info className="h-4 w-4 text-gray-400 group-hover:text-gray-600" />
                             </PopoverTrigger>
                             <PopoverContent>{field.tooltip}</PopoverContent>
                         </Popover>

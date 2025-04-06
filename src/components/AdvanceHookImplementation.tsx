@@ -1,4 +1,3 @@
-// CompleteExample.tsx - A full example using the DntelForm hook
 import { useState } from "react";
 import {
     Card,
@@ -33,24 +32,24 @@ import {
 } from "lucide-react";
 
 // Import the useDntelForm hook and utilities
-import { useDntelForm } from "@/hooks/useDntelForm";
+import { useDntelForm } from "@/hooks";
 import {
     validateForm,
     createPrintableForm,
     applyChangesToData,
-} from "@/hooks/utils";
+} from "@/hooks/useDntelForm/utils/utils";
 
 // Sample data
 import sampleData from "@/data/input.json";
 import { FormData } from "@/hooks";
 
-const CompleteExample = () => {
+const AdvanceHookImplementation = () => {
     // State for the example UI
     const [activeTab, setActiveTab] = useState("form");
     const [showUnsavedDialog, setShowUnsavedDialog] = useState(false);
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
     const [submitting, setSubmitting] = useState(false);
-    const [formId] = useState(`patient-form-${Date.now()}`); // Generate a unique ID
+    const [formId] = useState(`patient-form-1`); // Generate a unique ID
     const [validationErrors, setValidationErrors] = useState<string[]>([]);
     const [showErrorsDialog, setShowErrorsDialog] = useState(false);
 
@@ -73,6 +72,8 @@ const CompleteExample = () => {
             clearLS,
         },
     ] = useDntelForm(sampleData as FormData, formId);
+
+    console.log(expandedSections, lastChanged);
 
     // Check for unsaved changes when exiting edit mode
     const handleEditModeToggle = () => {
@@ -534,4 +535,4 @@ const CompleteExample = () => {
     );
 };
 
-export default CompleteExample;
+export default AdvanceHookImplementation;

@@ -13,6 +13,7 @@ A powerful React hook for managing complex form state with sections, automatic d
 -   **Printable Form Generation**: Create printable versions of the form
 -   **TypeScript Support**: Fully typed API and components
 
+
 ## Dependencies
 
 The hook has the following peer dependencies:

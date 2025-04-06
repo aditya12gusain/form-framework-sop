@@ -1,10 +1,13 @@
 // useDntelForm.tsx
 import { useState, useEffect, useRef, useCallback } from "react";
-import { FormField } from "@/hooks/FormField";
-import { DntelForm } from "@/hooks/DntelForm";
 
-// Import types
-import { FieldProps, FormData, UseDntelFormReturn } from "./types";
+import {
+    FieldProps,
+    FormData,
+    UseDntelFormReturn,
+    DntelForm,
+    FormField,
+} from "./index";
 
 // Custom hook for form handling
 export function useDntelForm(
@@ -155,11 +158,17 @@ export function useDntelForm(
     // Handle section expansion state changes
     const handleSectionToggle = useCallback(
         (sectionId: string, isOpen: boolean) => {
-            setExpandedSections((prev) =>
-                isOpen
-                    ? [...prev, sectionId]
-                    : prev.filter((id) => id !== sectionId)
-            );
+            setExpandedSections((prev) => {
+                if (isOpen) {
+                    // Only add if not already present
+                    if (!prev.includes(sectionId)) {
+                        return [...prev, sectionId];
+                    }
+                    return prev;
+                } else {
+                    return prev.filter((id) => id !== sectionId);
+                }
+            });
             if (isOpen) {
                 setActiveSection(sectionId);
             }

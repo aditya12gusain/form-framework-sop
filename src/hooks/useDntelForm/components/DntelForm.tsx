@@ -14,29 +14,12 @@ import {
 } from "@/components/ui/popover";
 import { Info } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { CodesSection } from "./CodesSection";
-import { ServiceHistorySection } from "./ServiceHistorySection";
-import { SectionProps, FieldProps } from "@/hooks/types";
-
-interface DntelFormProps {
-    sortedSections: Array<{ key: string } & SectionProps>;
-    expandedSections: string[];
-    activeSection: string;
-    editMode: boolean;
-    sectionRefs: React.RefObject<Record<string, HTMLElement | null>>;
-    onSectionToggle: (sectionId: string, isOpen: boolean) => void;
-    onExpandAll: () => void;
-    onCollapseAll: () => void;
-    onEditModeToggle: () => void;
-    onReset: () => void;
-    onClearLS: () => void;
-    renderField: (
-        key: string,
-        field: FieldProps,
-        bgColor?: string
-    ) => React.ReactElement;
-    id?: string;
-}
+import {
+    FieldProps,
+    DntelFormProps,
+    ServiceHistorySection,
+    CodesSection,
+} from "../index";
 
 export const DntelForm = React.memo(
     ({
@@ -138,7 +121,7 @@ export const DntelForm = React.memo(
                             )}
                         >
                             <AccordionTrigger
-                                className="px-4 py-3 hover:no-underline hover:bg-gray-50"
+                                className="px-4 py-3 hover:no-underline cursor-pointer hover:bg-gray-50"
                                 onClick={() =>
                                     onSectionToggle(
                                         section.key,
@@ -154,8 +137,13 @@ export const DntelForm = React.memo(
                                         </span>
                                         {section.tooltip && (
                                             <Popover>
-                                                <PopoverTrigger>
-                                                    <Info className="h-4 w-4 text-gray-400" />
+                                                <PopoverTrigger
+                                                    className="cursor-pointer group"
+                                                    onClick={(e) =>
+                                                        e.stopPropagation()
+                                                    }
+                                                >
+                                                    <Info className="h-4 w-4 text-gray-400 group-hover:text-gray-600" />
                                                 </PopoverTrigger>
                                                 <PopoverContent>
                                                     {section.tooltip}
