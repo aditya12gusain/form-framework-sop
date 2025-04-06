@@ -55,22 +55,24 @@ const CompleteExample = () => {
     const [showErrorsDialog, setShowErrorsDialog] = useState(false);
 
     // Use the DntelForm hook with the sample data
-    const {
+    const [
         FormComponent,
-        changes,
-        activeSection,
-        expandedSections,
-        lastChanged,
-        expandAll,
-        collapseAll,
-        scrollToSection,
-        expandSection,
-        editMode,
-        setEditMode,
-        reset,
-        changeValue,
-        clearLS,
-    } = useDntelForm(sampleData as FormData, formId);
+        {
+            changes,
+            activeSection,
+            expandedSections,
+            lastChanged,
+            expandAll,
+            collapseAll,
+            scrollToSection,
+            expandSection,
+            editMode,
+            setEditMode,
+            reset,
+            changeValue,
+            clearLS,
+        },
+    ] = useDntelForm(sampleData as FormData, formId);
 
     // Check for unsaved changes when exiting edit mode
     const handleEditModeToggle = () => {
@@ -200,7 +202,7 @@ const CompleteExample = () => {
                         <TabsTrigger value="changes">
                             Changes
                             {Object.keys(changes).length > 0 && (
-                                <Badge variant="secondary" className="ml-2">
+                                <Badge variant="outline">
                                     {Object.keys(changes).length}
                                 </Badge>
                             )}
@@ -305,7 +307,7 @@ const CompleteExample = () => {
                     </Card>
 
                     {/* Form component */}
-                    <FormComponent />
+                    {FormComponent}
 
                     {/* Form status summary */}
                     <Card>

@@ -15,7 +15,7 @@ export type {
 } from "@/hooks/types";
 
 // Optional: Export pre-configured components
-export { DntelForm } from "@/components/DntelForm";
+export { DntelForm } from "@/hooks/DntelForm";
 
 // Optional: Export utility functions
 export * from "@/hooks/utils";

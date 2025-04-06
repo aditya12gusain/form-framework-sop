@@ -57,20 +57,21 @@ export interface FormData {
     sections: Record<string, SectionProps>;
 }
 
-// Hook return type
-export interface UseDntelFormReturn {
-    FormComponent: React.FC;
-    changes: Record<string, any>;
-    activeSection: string;
-    expandedSections: string[];
-    lastChanged: number | null;
-    expandAll: () => void;
-    collapseAll: () => void;
-    scrollToSection: (id: string) => void;
-    expandSection: (id: string) => void;
-    reset: () => void;
-    changeValue: (key: string, value: any) => void;
-    clearLS: () => void;
-    editMode: boolean;
-    setEditMode: (enabled: boolean) => void;
-}
+export type UseDntelFormReturn = [
+    React.ReactElement,
+    {
+        changes: Record<string, any>;
+        activeSection: string;
+        expandedSections: string[];
+        lastChanged: number | null;
+        expandAll: () => void;
+        collapseAll: () => void;
+        scrollToSection: (id: string) => void;
+        expandSection: (id: string) => void;
+        reset: () => void;
+        changeValue: (key: string, value: any) => void;
+        clearLS: () => void;
+        editMode: boolean;
+        setEditMode: (enabled: boolean) => void;
+    }
+];

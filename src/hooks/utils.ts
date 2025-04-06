@@ -3,45 +3,6 @@
 import { FormData } from "./types";
 
 /**
- * Extracts all field keys from the form data
- */
-export function getAllFieldKeys(data: FormData): string[] {
-    const keys: string[] = [];
-
-    Object.entries(data.sections).forEach(([sectionKey, section]) => {
-        if (section.module === "codes") {
-            // Handle special Codes section
-            Object.entries(section.fields).forEach(
-                ([codeKey, codeData]: [string, any]) => {
-                    if (codeData.frequency) {
-                        keys.push(codeData.frequency.key);
-                    }
-                    if (codeData.coveragePercentage) {
-                        keys.push(codeData.coveragePercentage.key);
-                    }
-                    if (codeData.guidelines) {
-                        Object.values(codeData.guidelines).forEach(
-                            (guideline: any) => {
-                                keys.push(guideline.key);
-                            }
-                        );
-                    }
-                }
-            );
-        } else if (section.module !== "ServiceHistory") {
-            // Handle regular sections
-            Object.entries(section.fields).forEach(
-                ([fieldKey, field]: [string, any]) => {
-                    keys.push(`${sectionKey}.${fieldKey}`);
-                }
-            );
-        }
-    });
-
-    return keys;
-}
-
-/**
  * Validates if all required fields are filled
  */
 export function validateForm(
@@ -250,41 +211,4 @@ export function applyChangesToData(
     });
 
     return newData;
-}
-
-/**
- * Get a nested value from a complex object using a dot-notation path
- */
-export function getNestedValue(obj: any, path: string): any {
-    const parts = path.split(".");
-    let current = obj;
-
-    for (const part of parts) {
-        if (current === null || current === undefined) {
-            return undefined;
-        }
-        current = current[part];
-    }
-
-    return current;
-}
-
-/**
- * Set a nested value in a complex object using a dot-notation path
- */
-export function setNestedValue(obj: any, path: string, value: any): any {
-    const newObj = { ...obj };
-    const parts = path.split(".");
-    let current = newObj;
-
-    for (let i = 0; i < parts.length - 1; i++) {
-        const part = parts[i];
-        if (!(part in current)) {
-            current[part] = {};
-        }
-        current = current[part];
-    }
-
-    current[parts[parts.length - 1]] = value;
-    return newObj;
 }
