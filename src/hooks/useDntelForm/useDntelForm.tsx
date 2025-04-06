@@ -14,7 +14,7 @@ export function useDntelForm(
     initialData: FormData,
     id?: string
 ): UseDntelFormReturn {
-    const [data, setData] = useState<FormData>(initialData);
+    const [data] = useState<FormData>(initialData);
     const [changes, setChanges] = useState<Record<string, any>>({});
     const [activeSection, setActiveSection] = useState<string>("");
     const [expandedSections, setExpandedSections] = useState<string[]>([]);

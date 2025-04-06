@@ -62,14 +62,11 @@ const AdvanceHookImplementation = () => {
             expandedSections,
             lastChanged,
             expandAll,
-            collapseAll,
             scrollToSection,
-            expandSection,
             editMode,
             setEditMode,
             reset,
             changeValue,
-            clearLS,
         },
     ] = useDntelForm(sampleData as FormData, formId);
 

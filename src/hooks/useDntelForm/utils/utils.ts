@@ -70,7 +70,7 @@ export function createPrintableForm(
                     if (codeData.guidelines) {
                         codeResult["Guidelines"] = {};
                         Object.entries(codeData.guidelines).forEach(
-                            ([guideKey, guideData]: [string, any]) => {
+                            ([, guideData]: [string, any]) => {
                                 const key = guideData.key;
                                 codeResult["Guidelines"][guideData.title] =
                                     changes[key] ?? guideData.value ?? "";
@@ -146,50 +146,45 @@ export function applyChangesToData(
         ) {
             // Handle Codes section fields
             // These require special handling based on the custom structure
-            Object.entries(newData.sections).forEach(
-                ([sectionKey, section]) => {
-                    if (section.module === "codes") {
-                        Object.entries(section.fields).forEach(
-                            ([codeKey, codeData]: [string, any]) => {
-                                // Check frequency
-                                if (
-                                    codeData.frequency &&
-                                    codeData.frequency.key === key
-                                ) {
-                                    codeData.frequency.value = value;
-                                }
-
-                                // Check coverage percentage
-                                if (
-                                    codeData.coveragePercentage &&
-                                    codeData.coveragePercentage.key === key
-                                ) {
-                                    codeData.coveragePercentage.value = value;
-                                }
-
-                                // Check guidelines
-                                if (codeData.guidelines) {
-                                    Object.entries(codeData.guidelines).forEach(
-                                        ([guideKey, guideData]: [
-                                            string,
-                                            any
-                                        ]) => {
-                                            if (guideData.key === key) {
-                                                guideData.value = value;
-                                            }
-                                        }
-                                    );
-                                }
+            Object.entries(newData.sections).forEach(([, section]) => {
+                if (section.module === "codes") {
+                    Object.entries(section.fields).forEach(
+                        ([, codeData]: [string, any]) => {
+                            // Check frequency
+                            if (
+                                codeData.frequency &&
+                                codeData.frequency.key === key
+                            ) {
+                                codeData.frequency.value = value;
                             }
-                        );
-                    }
+
+                            // Check coverage percentage
+                            if (
+                                codeData.coveragePercentage &&
+                                codeData.coveragePercentage.key === key
+                            ) {
+                                codeData.coveragePercentage.value = value;
+                            }
+
+                            // Check guidelines
+                            if (codeData.guidelines) {
+                                Object.entries(codeData.guidelines).forEach(
+                                    ([, guideData]: [string, any]) => {
+                                        if (guideData.key === key) {
+                                            guideData.value = value;
+                                        }
+                                    }
+                                );
+                            }
+                        }
+                    );
                 }
-            );
+            });
         }
     });
 
     // Update stats for each section
-    Object.entries(newData.sections).forEach(([sectionKey, section]) => {
+    Object.entries(newData.sections).forEach(([, section]) => {
         if (
             section.stats &&
             section.module !== "codes" &&
@@ -198,7 +193,7 @@ export function applyChangesToData(
             let filled = 0;
 
             Object.entries(section.fields).forEach(
-                ([fieldKey, field]: [string, any]) => {
+                ([, field]: [string, any]) => {
                     const value = field.value;
                     if (value !== undefined && value !== null && value !== "") {
                         filled++;
@@ -219,7 +214,7 @@ export function getAllFieldKeys(data: FormData): string[] {
     Object.entries(data.sections).forEach(([sectionKey, section]) => {
         if (section.module === "codes") {
             Object.entries(section.fields).forEach(
-                ([codeKey, codeData]: [string, any]) => {
+                ([, codeData]: [string, any]) => {
                     if (codeData.frequency) {
                         keys.push(codeData.frequency.key);
                     }
@@ -228,7 +223,7 @@ export function getAllFieldKeys(data: FormData): string[] {
                     }
                     if (codeData.guidelines) {
                         Object.entries(codeData.guidelines).forEach(
-                            ([guidelineKey, guidelineData]: [string, any]) => {
+                            ([, guidelineData]: [string, any]) => {
                                 keys.push(guidelineData.key);
                             }
                         );
@@ -237,7 +232,7 @@ export function getAllFieldKeys(data: FormData): string[] {
             );
         } else if (section.module === "ServiceHistory") {
             Object.entries(section.fields).forEach(
-                ([categoryKey, categoryData]: [string, any]) => {
+                ([, categoryData]: [string, any]) => {
                     categoryData.Services.forEach((service: any) => {
                         keys.push(service.CDTCode.key);
                         keys.push(service.FriendlyName.key);
@@ -247,7 +242,7 @@ export function getAllFieldKeys(data: FormData): string[] {
             );
         } else {
             Object.entries(section.fields).forEach(
-                ([fieldKey, field]: [string, any]) => {
+                ([fieldKey]: [string, any]) => {
                     keys.push(`${sectionKey}.${fieldKey}`);
                 }
             );
